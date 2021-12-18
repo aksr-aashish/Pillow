@@ -780,9 +780,10 @@ class pil_build_ext(build_ext):
 
         if feature.want("xcb"):
             _dbg("Looking for xcb")
-            if _find_include_file(self, "xcb/xcb.h"):
-                if _find_library_file(self, "xcb"):
-                    feature.xcb = "xcb"
+            if _find_include_file(self, "xcb/xcb.h") and _find_library_file(
+                self, "xcb"
+            ):
+                feature.xcb = "xcb"
 
         for f in feature:
             if not getattr(feature, f) and feature.require(f):
@@ -845,12 +846,11 @@ class pil_build_ext(build_ext):
             libs = ["freetype"]
             defs = []
             if feature.raqm:
+                defs.append(("HAVE_RAQM", None))
                 if not feature.want_vendor("raqm"):  # using system Raqm
-                    defs.append(("HAVE_RAQM", None))
                     defs.append(("HAVE_RAQM_SYSTEM", None))
                     libs.append(feature.raqm)
                 else:  # building Raqm from src/thirdparty
-                    defs.append(("HAVE_RAQM", None))
                     srcs.append("src/thirdparty/raqm/raqm.c")
                     libs.append(feature.harfbuzz)
                     if not feature.want_vendor("fribidi"):  # using system FriBiDi

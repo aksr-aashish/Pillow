@@ -479,8 +479,8 @@ def assert_aux_channel_preserved(mode, transform_in_place, preserved_channel):
         # fmt: on
         chans = []
         bands = ImageMode.getmode(mode).bands
+        channel_type = "L"  # 8-bit unorm
         for band_ndx in range(len(bands)):
-            channel_type = "L"  # 8-bit unorm
             channel_pattern = hopper(channel_type)
 
             # paste pattern with varying offsets to avoid correlation

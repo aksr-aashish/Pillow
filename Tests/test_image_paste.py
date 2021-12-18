@@ -199,7 +199,7 @@ class TestImagingPaste:
             hist = im.crop(rect).histogram()
             while hist:
                 head, hist = hist[:256], hist[256:]
-                assert head[255] == 128 * 128
+                assert head[255] == 128**2
                 assert sum(head[:255]) == 0
 
     def test_color_mask_1(self):
@@ -225,10 +225,10 @@ class TestImagingPaste:
             )
 
     def test_color_mask_L(self):
+        color = "white"
+
         for mode in ("RGBA", "RGB", "L"):
             im = getattr(self, "gradient_" + mode).copy()
-            color = "white"
-
             self.assert_9points_paste(
                 im,
                 color,
@@ -247,10 +247,10 @@ class TestImagingPaste:
             )
 
     def test_color_mask_RGBA(self):
+        color = "white"
+
         for mode in ("RGBA", "RGB", "L"):
             im = getattr(self, "gradient_" + mode).copy()
-            color = "white"
-
             self.assert_9points_paste(
                 im,
                 color,
@@ -269,10 +269,10 @@ class TestImagingPaste:
             )
 
     def test_color_mask_RGBa(self):
+        color = "white"
+
         for mode in ("RGBA", "RGB", "L"):
             im = getattr(self, "gradient_" + mode).copy()
-            color = "white"
-
             self.assert_9points_paste(
                 im,
                 color,

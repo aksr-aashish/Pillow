@@ -37,7 +37,7 @@ def cmd_rmdir(path):
 def cmd_nmake(makefile=None, target="", params=None):
     if params is None:
         params = ""
-    elif isinstance(params, list) or isinstance(params, tuple):
+    elif isinstance(params, (list, tuple)):
         params = " ".join(params)
     else:
         params = str(params)
@@ -56,7 +56,7 @@ def cmd_nmake(makefile=None, target="", params=None):
 def cmd_cmake(params=None, file="."):
     if params is None:
         params = ""
-    elif isinstance(params, list) or isinstance(params, tuple):
+    elif isinstance(params, (list, tuple)):
         params = " ".join(params)
     else:
         params = str(params)
@@ -410,9 +410,7 @@ def write_script(name, lines):
 
 
 def get_footer(dep):
-    lines = []
-    for out in dep.get("headers", []):
-        lines.append(cmd_copy(out, "{inc_dir}"))
+    lines = [cmd_copy(out, "{inc_dir}") for out in dep.get("headers", [])]
     for out in dep.get("libs", []):
         lines.append(cmd_copy(out, "{lib_dir}"))
     for out in dep.get("bins", []):
@@ -499,7 +497,7 @@ if __name__ == "__main__":
             verbose = True
         elif arg == "--no-imagequant":
             disabled += ["libimagequant"]
-        elif arg == "--no-raqm" or arg == "--no-fribidi":
+        elif arg in ["--no-raqm", "--no-fribidi"]:
             disabled += ["fribidi"]
         elif arg.startswith("--depends="):
             depends_dir = arg[10:]

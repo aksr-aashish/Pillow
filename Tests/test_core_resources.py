@@ -36,7 +36,7 @@ class TestCoreMemory:
     def teardown_method(self):
         # Restore default values
         Image.core.set_alignment(1)
-        Image.core.set_block_size(1024 * 1024)
+        Image.core.set_block_size(1024**2)
         Image.core.set_blocks_max(0)
         Image.core.clear_cache()
 
@@ -167,7 +167,7 @@ class TestEnvVars:
     def teardown_method(self):
         # Restore default values
         Image.core.set_alignment(1)
-        Image.core.set_block_size(1024 * 1024)
+        Image.core.set_block_size(1024**2)
         Image.core.set_blocks_max(0)
         Image.core.clear_cache()
 

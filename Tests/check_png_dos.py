@@ -19,7 +19,7 @@ def test_ignore_dos_text():
         assert len(s) < 1024 * 1024, "Text chunk larger than 1M"
 
     for s in im.info.values():
-        assert len(s) < 1024 * 1024, "Text chunk larger than 1M"
+        assert len(s) < 1024**2, "Text chunk larger than 1M"
 
 
 def test_dos_text():
@@ -32,7 +32,7 @@ def test_dos_text():
         return
 
     for s in im.text.values():
-        assert len(s) < 1024 * 1024, "Text chunk larger than 1M"
+        assert len(s) < 1024**2, "Text chunk larger than 1M"
 
 
 def test_dos_total_memory():
@@ -55,7 +55,5 @@ def test_dos_total_memory():
         assert "Too much memory" in msg
         return
 
-    total_len = 0
-    for txt in im2.text.values():
-        total_len += len(txt)
+    total_len = sum(len(txt) for txt in im2.text.values())
     assert total_len < 64 * 1024 * 1024, "Total text chunks greater than 64M"
